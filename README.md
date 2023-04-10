@@ -1,6 +1,6 @@
 # Evertything-DevOps
 
-A repository for Everything-DevOgps teaching and learning series. 
+A repository for Everything-DevOps teaching and learning series. 
 
 A community of Devops enthusiasts learning and growing together.
 
