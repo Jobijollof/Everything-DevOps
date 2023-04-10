@@ -36,16 +36,16 @@ There are several reasons why you might want to use Prometheus to monitor your s
 
 Prometheus can monitor a wide range of systems and applications, including:
 
-Servers: Prometheus can collect metrics from servers, including CPU usage, memory usage, disk usage, and network activity.
+- Servers: Prometheus can collect metrics from servers, including CPU usage, memory usage, disk usage, and network activity.
 
-Containers: Prometheus can monitor containerized applications and infrastructure, such as those running on Kubernetes or Docker.
+- Containers: Prometheus can monitor containerized applications and infrastructure, such as those running on Kubernetes or Docker.
 
-Databases: Prometheus can monitor popular databases such as MySQL, PostgreSQL, and MongoDB, tracking metrics such as query performance, connection usage, and more.
+- Databases: Prometheus can monitor popular databases such as MySQL, PostgreSQL, and MongoDB, tracking metrics such as query performance, connection usage, and more.
 
-Applications: Prometheus can monitor the performance and behavior of applications, collecting metrics such as request latency, error rates, and more.
+- Applications: Prometheus can monitor the performance and behavior of applications, collecting metrics such as request latency, error rates, and more.
 
-Infrastructure components: Prometheus can monitor infrastructure components such as load balancers, proxies, and caches, providing visibility into their performance and behavior.
+- Infrastructure components: Prometheus can monitor infrastructure components such as load balancers, proxies, and caches, providing visibility into their performance and behavior.
 
-Cloud services: Prometheus can also monitor various cloud services such as AWS, GCP, and Azure, collecting metrics related to their usage and performance.
+- Cloud services: Prometheus can also monitor various cloud services such as AWS, GCP, and Azure, collecting metrics related to their usage and performance.
 
 Overall, Prometheus can monitor a wide range of systems and applications, making it a valuable tool for organizations that need to monitor and troubleshoot complex, distributed systems.
