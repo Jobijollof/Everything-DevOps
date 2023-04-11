@@ -32,7 +32,7 @@ There are several reasons why you might want to use Prometheus to monitor your s
 
 - Alerting: Prometheus provides a flexible alerting system that can be configured to notify you when certain thresholds are exceeded or certain events occur. This can help you identify and address issues before they become serious problems.
 
-### What can prometheus monitor
+### Use cases for Prometheus
 
 Prometheus can monitor a wide range of systems and applications, including:
 
@@ -48,4 +48,4 @@ Prometheus can monitor a wide range of systems and applications, including:
 
 - Cloud services: Prometheus can also monitor various cloud services such as AWS, GCP, and Azure, collecting metrics related to their usage and performance.
 
-Overall, Prometheus can monitor a wide range of systems and applications, making it a valuable tool for organizations that need to monitor and troubleshoot complex, distributed systems.
+Overall, Prometheus can monitor a wide range of systems and applications, making it a valuable tool for organizations that need to monitor and troubleshoot complex, distributed systems.gi
