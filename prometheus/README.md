@@ -48,4 +48,48 @@ Prometheus can monitor a wide range of systems and applications, including:
 
 - Cloud services: Prometheus can also monitor various cloud services such as AWS, GCP, and Azure, collecting metrics related to their usage and performance.
 
-Overall, Prometheus can monitor a wide range of systems and applications, making it a valuable tool for organizations that need to monitor and troubleshoot complex, distributed systems.gi
+Overall, Prometheus can monitor a wide range of systems and applications, making it a valuable tool for organizations that need to monitor and troubleshoot complex, distributed systems.
+
+### Monitor a Docker image with Prometheus (AWS Cloud):
+
+- On the AWS console, search for EC2
+
+- Click on `Launch instance`
+
+![launch](./images/launch-instance1.png)
+
+![launch](./images/launch-instance2.png)
+
+![launch](./images/luanch-instance3.png)
+
+![launch](./images/launch-instance4.png)
+
+- Leave every other thing as default and Launch Instance
+
+- Connect to server
+
+![launch](./images/launch-instance5-connect.png)
+
+`sudo apt update`
+
+`sudo apt install docker.io`
+
+- Go to docker hub to pick an image. If you have an image, you can use it. In my case i am using Nginx container on docker hub.
+
+![docker](./images/nginx-container.png)
+
+`sudo docker run nginx`
+
+![docker](./images/docker-run.png)
+
+`sudo docker run -d nginx`
+
+The `-d` flag will keep the container running so that the terminal remains available.
+
+![docker](./images/docker-d.png)
+
+
+
+
+
+
