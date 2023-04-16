@@ -1,16 +1,59 @@
 
 ## What is prometheus?
 
-Prometheus is an open-source monitoring and alerting system that was created by SoundCloud in 2012. It is designed to collect metrics from various sources such as servers, applications, and other systems, and store them in a time-series database. Prometheus can also provide a powerful query language for analyzing these metrics and creating alerts based on specific conditions.
+Prometheus is an open-source monitoring and alerting system that was created by SoundCloud in 2012. It is designed to collect metrics from various sources such as servers, applications, and other systems, and store them in a time-series database. Prometheus can also provide a powerful query language for analyzing these metrics and creating alerts based on specific conditions. 
+PromQL, short for Prometheus Querying Language, is the main way to query metrics within Prometheus. You can display an expression's return either as a graph or export it using the HTTP API. PromQL uses three data types: scalars, range vectors, and instant vectors. Scalars are single numerical values that represent a specific measurement at a specific point in time. Range vectors represent a range of values over a period of time, while instant vectors represent a single value at a specific point in time.
+ It also uses strings, but only as literals. which means that users can input specific values as text within their queries. This can be helpful when querying for specific metrics or data points that are identified by their names or labels.
+
 
 Prometheus is particularly useful for monitoring complex, distributed systems such as cloud-based architectures. It is often used in conjunction with other tools such as Grafana, which provides a dashboard for visualizing and analyzing the collected data.
 
+Prometheus has a central component called the Prometheus server that collects the metrics from different nodes. Prometheus server uses the concept of scraping by contacting the target system’s metric endpoints to fetch data at regular intervals.
+
+### How does Prometheus work?
+Here's a high-level overview of how Prometheus works:
+
+- Configuration: Prometheus is configured with a set of endpoints that it will scrape metrics from. The configuration can be done either through configuration files or service discovery mechanisms.
+
+- Scrape: Prometheus periodically scrapes the configured endpoints to collect metrics. The scrape interval can be configured in Prometheus.
+
+- Storage: The collected metrics are stored in a time-series database with a configurable retention period.
+
+- Query: Prometheus provides a powerful query language called PromQL, which allows users to query the collected metrics and perform various calculations, aggregations, and transformations.
+
+- Visualization: Prometheus can be integrated with various visualization tools like Grafana to create rich visualizations and dashboards.
+
+- Alerting: Prometheus has a built-in alerting mechanism that can be used to define alerts based on the collected metrics. When an alert condition is met, Prometheus can send notifications via various channels like email, Slack, PagerDuty, etc.
+
+In summary, Prometheus collects, stores, and analyzes metrics using a pull-based approach, and provides powerful querying, visualization, and alerting capabilities to help users monitor and maintain their systems.
+
 Overall, Prometheus is a powerful tool for monitoring and troubleshooting modern software systems, and its popularity has grown rapidly in recent years as more and more organizations adopt cloud-native architectures.
 
-Prometheus in simpler terms is a tool that helps monitor and collect data about different aspects of your computer systems or applications. It can keep an eye on things like CPU usage, memory usage, network traffic, and much more. This data is then stored in a database that can be easily searched and analyzed to help you understand how your systems are performing and identify any issues that needs to be addressed.
 
-By monitoring your application with Prometheus, you can gain insights into how it's performing and identify areas for improvement. For example, if you notice that a certain page on your web app is taking a long time to load, you can investigate the issue and optimize your code to improve performance.
+Monitoring  an AWS EC2 instance with Prometheus 
 
+Prometheus needs a node exporter when it needs to monitor system-level metrics such as CPU usage, memory usage, disk usage, network usage, and so on, for a given node or host. A node exporter is a Prometheus exporter that runs on the node or host, collects the system-level metrics and exposes them to Prometheus in a format that Prometheus can understand and scrape.
+
+Without a node exporter, Prometheus cannot scrape the system-level metrics from the node or host, and thus cannot monitor the health and performance of the node or host. Therefore, a node exporter is an essential component for monitoring system-level metrics using Prometheus.
+
+
+Node exporter is like a doctor for your computer! It helps you keep an eye on how your computer is feeling and tells you if it's doing okay or if it needs some help.
+
+Just like how a doctor checks your temperature, pulse, and other things to make sure you're healthy, Node exporter checks your computer's temperature, how much memory it's using, and how much data is going in and out of it. It does this by asking your computer questions about itself and then gives you the answers.
+
+When Node exporter gives you this information, you can use it to see if your computer is running smoothly or if there are any problems you need to fix. For example, if Node exporter tells you that your computer is using too much memory, you might need to close some programs to help it run better.
+
+So Node exporter is like a helpful friend that tells you about your computer's health so you can take care of it and keep it running well!
+
+### How does node exporter relate to prometheus?
+
+Prometheus is a tool that helps us collect and store all the information that the node exporter is providing.
+
+It's like a big book where we can write down all the different things we want to know about the computer, like how much CPU it's using or how many network connections it has.
+
+And just like how we can use the node exporter to take a "snapshot" of what the computer is doing at a specific moment in time, Prometheus can take lots of those snapshots over time and use them to create graphs and charts that show us how the computer's behavior is changing over time.
+
+So to sum it up, the node exporter is like a tool that provides us with information about what the computer is doing, and Prometheus is a tool that helps us collect and analyze that information so we can better understand how the computer is behaving.
 ### Monitoring and Logging
 
 Monitoring and logging are two related but distinct activities in the context of software systems.
@@ -50,6 +93,9 @@ Prometheus can monitor a wide range of systems and applications, including:
 
 Overall, Prometheus can monitor a wide range of systems and applications, making it a valuable tool for organizations that need to monitor and troubleshoot complex, distributed systems.
 
+
+### Monitoring an AWS Instance with Pormetheus
+
 ### Monitor a Docker image with Prometheus (AWS Cloud):
 
 - On the AWS console, search for EC2
@@ -84,11 +130,42 @@ Overall, Prometheus can monitor a wide range of systems and applications, making
 
 `sudo docker run -d nginx`
 
-The `-d` flag will keep the container running so that the terminal remains available.
+The `-d` flag will keep the container running in the background so that the terminal remains available.
 
 ![docker](./images/docker-d.png)
 
+We are going to be running prometheus from a docker container  we will need to bind prometheus config file to the container. This will allow prometheus to update the config file using Docker commands.
 
+Create a `prometheus.yml` file and add the following:
+
+`sudo nano /root/prometheus.yml`
+
+```# my global config
+global:
+  scrape_interval:  15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  
+  external_labels:
+      monitor: 'codelab-monitor'
+#A scrape configuration containing exactly one endpoint to scrape
+# Here it is prometheus itself
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    scrape_interval:  '5s'
+    static_configs:
+      - targets: ['localhost:9090', '<Public Ip>:9090']
+
+```
+- Run 
+
+```
+sudo docker run --rm -p 9090:9090 --name prometheus -v /root/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus --config.file=/etc/prometheus/prometheus.yml --web.enable-lifecycle
+
+```
 
 
 
