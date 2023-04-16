@@ -28,32 +28,6 @@ Here's a high-level overview of how Prometheus works:
 In summary, Prometheus collects, stores, and analyzes metrics using a pull-based approach, and provides powerful querying, visualization, and alerting capabilities to help users monitor and maintain their systems.
 
 Overall, Prometheus is a powerful tool for monitoring and troubleshooting modern software systems, and its popularity has grown rapidly in recent years as more and more organizations adopt cloud-native architectures.
-
-
-Monitoring  an AWS EC2 instance with Prometheus 
-
-Prometheus needs a node exporter when it needs to monitor system-level metrics such as CPU usage, memory usage, disk usage, network usage, and so on, for a given node or host. A node exporter is a Prometheus exporter that runs on the node or host, collects the system-level metrics and exposes them to Prometheus in a format that Prometheus can understand and scrape.
-
-Without a node exporter, Prometheus cannot scrape the system-level metrics from the node or host, and thus cannot monitor the health and performance of the node or host. Therefore, a node exporter is an essential component for monitoring system-level metrics using Prometheus.
-
-
-Node exporter is like a doctor for your computer! It helps you keep an eye on how your computer is feeling and tells you if it's doing okay or if it needs some help.
-
-Just like how a doctor checks your temperature, pulse, and other things to make sure you're healthy, Node exporter checks your computer's temperature, how much memory it's using, and how much data is going in and out of it. It does this by asking your computer questions about itself and then gives you the answers.
-
-When Node exporter gives you this information, you can use it to see if your computer is running smoothly or if there are any problems you need to fix. For example, if Node exporter tells you that your computer is using too much memory, you might need to close some programs to help it run better.
-
-So Node exporter is like a helpful friend that tells you about your computer's health so you can take care of it and keep it running well!
-
-### How does node exporter relate to prometheus?
-
-Prometheus is a tool that helps us collect and store all the information that the node exporter is providing.
-
-It's like a big book where we can write down all the different things we want to know about the computer, like how much CPU it's using or how many network connections it has.
-
-And just like how we can use the node exporter to take a "snapshot" of what the computer is doing at a specific moment in time, Prometheus can take lots of those snapshots over time and use them to create graphs and charts that show us how the computer's behavior is changing over time.
-
-So to sum it up, the node exporter is like a tool that provides us with information about what the computer is doing, and Prometheus is a tool that helps us collect and analyze that information so we can better understand how the computer is behaving.
 ### Monitoring and Logging
 
 Monitoring and logging are two related but distinct activities in the context of software systems.
@@ -93,8 +67,73 @@ Prometheus can monitor a wide range of systems and applications, including:
 
 Overall, Prometheus can monitor a wide range of systems and applications, making it a valuable tool for organizations that need to monitor and troubleshoot complex, distributed systems.
 
+### Monitoring  an AWS EC2 instance with Prometheus 
 
-### Monitoring an AWS Instance with Pormetheus
+Prometheus needs a node exporter when it needs to monitor system-level metrics such as CPU usage, memory usage, disk usage, network usage, and so on, for a given node or host. A node exporter is a Prometheus exporter that runs on the node or host, collects the system-level metrics and exposes them to Prometheus in a format that Prometheus can understand and scrape.
+
+Without a node exporter, Prometheus cannot scrape the system-level metrics from the node or host, and thus cannot monitor the health and performance of the node or host. Therefore, a node exporter is an essential component for monitoring system-level metrics using Prometheus.
+
+
+Node exporter is like a doctor for your computer! It helps you keep an eye on how your computer is feeling and tells you if it's doing okay or if it needs some help.
+
+Just like how a doctor checks your temperature, pulse, and other things to make sure you're healthy, Node exporter checks your computer's temperature, how much memory it's using, and how much data is going in and out of it. It does this by asking your computer questions about itself and then gives you the answers.
+
+When Node exporter gives you this information, you can use it to see if your computer is running smoothly or if there are any problems you need to fix. For example, if Node exporter tells you that your computer is using too much memory, you might need to close some programs to help it run better.
+
+So Node exporter is like a helpful friend that tells you about your computer's health so you can take care of it and keep it running well!
+
+### How does node exporter relate to prometheus?
+
+Prometheus is a tool that helps us collect and store all the information that the node exporter is providing.
+
+It's like a big book where we can write down all the different things we want to know about the computer, like how much CPU it's using or how many network connections it has.
+
+And just like how we can use the node exporter to take a "snapshot" of what the computer is doing at a specific moment in time, Prometheus can take lots of those snapshots over time and use them to create graphs and charts that show us how the computer's behavior is changing over time.
+
+So to sum it up, the node exporter is like a tool that provides us with information about what the computer is doing, and Prometheus is a tool that helps us collect and analyze that information so we can better understand how the computer is behaving.
+
+### DEMO:
+
+Step 1:Create a Linux EC2 instance
+The first step for the execution of this tutorial is to create two Linux instances.
+The first instance machine is for Prometheus while the second instance is for Node exporter.
+
+- Log into the AWS console click on launch an instance.
+![click](./images/launch-instance1ec2.png) 
+
+- - Select the free tier-eligible Amazon Linux 2 instance.
+
+![instance](./images/launch-instance2ec2.png)
+
+- Select an existing or create a new key pair
+
+![instance](./images/launch-instance3ec2.png)
+
+- Select the default VPC and subnet and leave other settings at default. You can choose to add settings to your instance based on a personal decision, but for this tutorial, we’ll leave these settings at default. 
+
+- Use default security group. 
+
+- Open port 22 for SSH, port 9090 for Prometheus, port 9100 for Node-exporter, and port 9093 for Alertmanager.
+
+![launch](./images/launch-instance5ec2.png)
+
+
+![launch](./images/launch-instance4ec2.png)
+
+
+![launch](./images/launch-instance6ec2.png)
+
+## Install Node-exporter (On Linux server)
+
+- Connect to the instance via SSH
+
+![connect](./images/connect-1prom.png)
+
+
+
+
+
+
 
 ### Monitor a Docker image with Prometheus (AWS Cloud):
 
