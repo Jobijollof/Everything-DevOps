@@ -1,10 +1,19 @@
 
 ## What is prometheus?
 
-Prometheus is an open-source monitoring and alerting system that was created by SoundCloud in 2012. It is designed to collect metrics from various sources such as servers, applications, and other systems, and store them in a time-series database. Prometheus can also provide a powerful query language for analyzing these metrics and creating alerts based on specific conditions. 
-PromQL, short for Prometheus Querying Language, is the main way to query metrics within Prometheus. You can display an expression's return either as a graph or export it using the HTTP API. PromQL uses three data types: scalars, range vectors, and instant vectors. Scalars are single numerical values that represent a specific measurement at a specific point in time. Range vectors represent a range of values over a period of time, while instant vectors represent a single value at a specific point in time.
- It also uses strings, but only as literals. which means that users can input specific values as text within their queries. This can be helpful when querying for specific metrics or data points that are identified by their names or labels.
+Prometheus is an open-source monitoring and alerting system that was created by SoundCloud in 2012. It is designed to collect metrics from various sources such as servers, applications, and other systems, and store them in a time-series database. 
+ 
+PromQL, short for Prometheus Querying Language, is the main way to query metrics within Prometheus. You can display an expression's return either as a graph or export it using the HTTP API. PromQL uses three data types: scalars, range vectors, and instant vectors.
 
+Scalars are simple numbers that represent a single value at a specific point in time. For example, the temperature in your room right now is a scalar value. Prometheus can collect scalar values like CPU usage, memory usage, or network traffic.
+
+Range vectors are a collection of scalar values over a period of time. For example, the CPU usage over the past 5 minutes is a range vector that consists of scalar values taken at different points in time. Prometheus can use range vectors to calculate things like the average CPU usage over a period of time.
+
+Instant vectors, on the other hand, are a snapshot of scalar values taken at a specific point in time. For example, the current CPU usage on a particular server is an instant vector that consists of scalar values for that server's CPU usage, memory usage, and so on. Prometheus can use instant vectors to generate real-time alerts and notifications when certain conditions are met. In summary, Scalars are single values at a specific point in time, range vectors are a collection of scalar values over a period of time, and instant vectors are a snapshot of scalar values taken at a specific point in time. These types of data are important for monitoring the health and performance of your applications and servers with Prometheus.
+
+It also uses strings, but only as literals. In Prometheus, strings are used to store words and sentences that describe things like labels and values. Labels are like sticky notes that help you remember where the information came from, like the name of a computer or the type of service it's running. Values are like the information itself, such as how much memory the computer is using or how many requests the service is handling.
+
+Strings in Prometheus are important because they help you keep track of different things and understand the information better. Just like how sticky notes can help you remember important things, strings help Prometheus remember important information about the metrics it's collecting.
 
 Prometheus is particularly useful for monitoring complex, distributed systems such as cloud-based architectures. It is often used in conjunction with other tools such as Grafana, which provides a dashboard for visualizing and analyzing the collected data.
 
@@ -13,7 +22,7 @@ Prometheus has a central component called the Prometheus server that collects th
 ### How does Prometheus work?
 Here's a high-level overview of how Prometheus works:
 
-- Configuration: Prometheus is configured with a set of endpoints that it will scrape metrics from. The configuration can be done either through configuration files or service discovery mechanisms.
+- Configuration: Prometheus is configured with a set of endpoints that it will scrape metrics from. The configuration can be done either through configuration files or service discovery mechanisms.(Service discovery is the process of automatically detecting devices and services on a computer network. This reduces the need for manual configuration by users and administrators.)
 
 - Scrape: Prometheus periodically scrapes the configured endpoints to collect metrics. The scrape interval can be configured in Prometheus.
 
@@ -67,7 +76,7 @@ Prometheus can monitor a wide range of systems and applications, including:
 
 Overall, Prometheus can monitor a wide range of systems and applications, making it a valuable tool for organizations that need to monitor and troubleshoot complex, distributed systems.
 
-### Monitoring  an AWS EC2 instance with Prometheus 
+### Monitoring with prometheus on AWS EC2  
 
 Prometheus needs a node exporter when it needs to monitor system-level metrics such as CPU usage, memory usage, disk usage, network usage, and so on, for a given node or host. A node exporter is a Prometheus exporter that runs on the node or host, collects the system-level metrics and exposes them to Prometheus in a format that Prometheus can understand and scrape.
 
