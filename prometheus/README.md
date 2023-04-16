@@ -129,13 +129,134 @@ The first instance machine is for Prometheus while the second instance is for No
 
 ![connect](./images/connect-1prom.png)
 
+- In the command line, run the following command
+
+```
+cd /opt/
+sudo wget https://github.com/prometheus/node_exporter/releases/download/v1.4.0-rc.0/node_exporter-1.4.0-rc.0.linux-amd64.tar.gz
+
+```
+Filesystem Hierarchy Standard (FHS) defines /opt as “reserved for the installation of add-on application software packages.” In this context, “add-on” means software that is not part of the system; for example, any external or third-party software.
+
+![connect](./images/connect-2prom.png)
+
+- To extract the downloaded file, run the following command:
+
+```
+sudo tar xf node_exporter-1.4.0-rc.0.linux-amd64.tar.gz
+
+```
+
+- Run the following command to change `sudo mv node_exporter-1.4.0-rc.0.linux-amd64` to `node_exporter` for easy access.
 
 
+```
+sudo mv node_exporter-1.4.0-rc.0.linux-amd64 node_exporter
+
+cd node_exporter
+
+```
+
+- Run the following command to call the node_exporter script:
 
 
+`sudo ./node_exporter`
+
+![connect](./images/connect-3prom.png)
 
 
-### Monitor a Docker image with Prometheus (AWS Cloud):
+- You can access the node_exporter agent at Linux-serverIP:9100
+
+![connect](./images/node.png)
+
+- Congratulations! Node exporter has been installed. 💃💃💃 
+
+## Install Prometheus
+
+Node-exporter has been successfully installed on the Linux-server instance. The next step is to install Prometheus on the Prometheus-server.
+
+- Connect to the Prometheus-server via SSH:
+
+- Run the following command to download Prometheus the instance:
+
+```
+sudo wget https://github.com/prometheus/prometheus/releases/download/v2.37.0/prometheus-2.37.0.linux-amd64.tar.gz
+
+```
+
+![launch](./images/connect-prom1.png)
+
+- Extract the downloaded file by running the following command:
+
+```
+sudo tar xf prometheus-2.37.0.linux-amd64.tar.gz
+
+```
+
+- Rename `prometheus-2.37.0.linux-amd64` to `prometheus` for easy access:
+
+```
+sudo mv prometheus-2.37.0.linux-amd64/ prometheus
+cd prometheus
+
+```
+
+- Edit the prometheus.yml file. 
+
+$ sudo nano prometheus.yml
+
+
+- Replace  <YOUR.LINUX-SERVER.IP.ADDRESS> in my example below with your own linux-server’s private IP address:
+
+```
+# my global config
+global:
+  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+ 
+# Alertmanager configuration
+alerting:
+  alert managers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+ 
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+ 
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: "prometheus
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+ 
+    static_configs:
+      - targets: ["localhost:9090",<YOUR.LINUX-SERVER.IP.ADDRESS>:9100]
+
+```
+
+![connect](./images/connect-IP.png)
+
+- To Call the Prometheus script, run the following command:
+
+`sudo ./prometheus`
+
+Currently, Prometheus is running on port 9090. If you check your PublicIP:9090, you should see Prometheus dashboard . 
+
+![final](./images/connect-final.png)
+
+- Click on the status drop-down and select targets.
+
+![targets](./images/targets-prom.png)
+
+![connect](./images/status.png)
+
+## Monitor a Docker image with Prometheus (AWS Cloud):
 
 - On the AWS console, search for EC2
 
@@ -177,9 +298,10 @@ We are going to be running prometheus from a docker container  we will need to b
 
 Create a `prometheus.yml` file and add the following:
 
-`sudo nano /root/prometheus.yml`
+`sudo nano /root/prometheus.yml` 
 
-```# my global config
+```
+# my global config
 global:
   scrape_interval:  15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
   
@@ -199,12 +321,106 @@ scrape_configs:
       - targets: ['localhost:9090', '<Public Ip>:9090']
 
 ```
+
+The global section defines global configuration options for Prometheus. In this case, we set the scrape_interval to 15 seconds and add an external label called monitor with the value codelab-monitor.
+
+The scrape_configs section defines the configurations for scraping metrics. In this example, we define one job named prometheus that scrapes metrics from localhost:9090 and <Public Ip>:9090 with a scrape interval of 5 seconds.
+
+
 - Run 
 
 ```
 sudo docker run --rm -p 9090:9090 --name prometheus -v /root/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus --config.file=/etc/prometheus/prometheus.yml --web.enable-lifecycle
 
 ```
+
+- Expected output:
+
+![error](./images/error.png)
+
+- We have to open port 9090 in the security groups inbound rules.
+
+![secure](./images/secuity-groups-docker.png)
+
+![docker](./images/dockerjob.png)
+
+- To monitor the health of the container
+
+
+`sudo nano /etc/docker/daemon.json`
+
+```
+{
+  "metrics-addr" : "127.0.0.1:9323",
+  "experimental" : true
+}
+```
+- We need the docker IP address
+
+`ifconfig -a`
+
+This command will not work because it is a new EC2 instance and it needs to install some things. Run
+
+`sudo apt install net-tools`
+
+`ifconfig -a`
+
+![docker](./images/docker-ip.png)
+
+- Replace the docker ip with the one initially stored in `daemon.json`
+
+![replaced](./images/replaced-ip.png)
+
+- Reconfigure `prometheus.yml` to add the docker job
+
+```
+global:
+  scrape_interval:  15s
+  external_labels:
+    monitor: 'codelab-monitor'
+
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: '5s'
+    static_configs:
+      - targets: ['localhost:9090', '<Public Ip>:9090']
+
+  - job_name: 'docker'
+    metrics_path: '/metrics'
+    scheme: 'http'
+    static_configs:
+      - targets: ['docker:9323']
+
+```
+- Restart docker
+
+`sudo service docker restart`
+
+```
+sudo docker run --rm -d -p 9090:9090 --name prometheus -v /root/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus --config.file=/etc/prometheus/prometheus.yml --web.enable-lifecycle
+
+```
+
+![docker](./images/docker-run1.png)
+
+- Go back to the Prometheus IP address
+
+![docker](./images/docker-up.png)
+
+- Click on graphs and search engine. Any metric starting with engine belongs to docker.
+
+- We are querying the health of the container.
+
+![state](./images/container%20%20state.png)
+
+ ![state](./images/container%20state2.png)
+
+
+
+
+
+
+
 
 
 
