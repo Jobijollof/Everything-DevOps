@@ -1,4 +1,4 @@
-# Evertything-DevOps
+# Everything-DevOps
 
 A repository for Everything-DevOps teaching and learning series. 
 
