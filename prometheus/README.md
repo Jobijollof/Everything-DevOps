@@ -48,7 +48,8 @@ In general, monitoring is more focused on real-time data collection and alerting
 
 ### Why Prometheus?
 
-There are several reasons why you might want to use Prometheus to monitor your systems or applications:
+
+There are several reasons why you might want to use Prometheus to monitor your systems or applications some of them are:
 
 - Flexible and powerful: Prometheus is a flexible and powerful monitoring tool that can monitor a wide range of systems and applications. It can collect a wide variety of metrics and allows you to configure how often to collect them, making it highly customizable.
 
@@ -57,6 +58,7 @@ There are several reasons why you might want to use Prometheus to monitor your s
 - Scalable: Prometheus is designed to be highly scalable, allowing it to handle large volumes of data and monitor many systems or applications simultaneously. It can also be integrated with other tools and systems to provide a comprehensive monitoring solution.
 
 - Alerting: Prometheus provides a flexible alerting system that can be configured to notify you when certain thresholds are exceeded or certain events occur. This can help you identify and address issues before they become serious problems.
+
 
 ### Use cases for Prometheus
 
