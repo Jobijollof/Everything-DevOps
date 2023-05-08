@@ -20,6 +20,7 @@ Prometheus is particularly useful for monitoring complex, distributed systems su
 Prometheus has a central component called the Prometheus server that collects the metrics from different nodes. Prometheus server uses the concept of scraping by contacting the target system’s metric endpoints to fetch data at regular intervals.
 
 ### How does Prometheus work?
+
 Here's a high-level overview of how Prometheus works:
 
 - Configuration: Prometheus is configured with a set of endpoints that it will scrape metrics from. The configuration can be done either through configuration files or service discovery mechanisms.(Service discovery is the process of automatically detecting devices and services on a computer network. This reduces the need for manual configuration by users and administrators.)
@@ -422,7 +423,7 @@ sudo docker run --rm -d -p 9090:9090 --name prometheus -v /root/prometheus.yml:/
 
 ![state](./images/container%20%20state.png)
 
- ![state](./images/container%20state2.png)
+![state](./images/container%20state2.png)
 
 
 
