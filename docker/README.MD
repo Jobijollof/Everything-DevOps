@@ -64,10 +64,27 @@ When you use Docker, you are creating and using images, containers, networks, vo
 ## Images
 An image is a read-only template with instructions for creating a Docker container. Often, an image is based on another image, with some additional customization. For example, you may build an image which is based on the ubuntu image, but installs the Apache web server and your application, as well as the configuration details needed to make your application run.
 
-A short demo
+# A short demo
 
-run:
-cd to frontend directory run 
+If you're on your windows machine fire on the Docker Desktop app 
+you can run the following command on your gitbash terminal or in VScode
+
+## OR
+
+If you are using a linux machine 
+
+first thing is to install docker
+
+use [this](https://docs.docker.com/engine/install/ubuntu/) as a guide 
+
+-  check id docker installed and what version
+```sh
+docker --version
+
+```
+
+
+- In the  frontend directory run 
 
 ```sh
 npm install 
@@ -80,11 +97,15 @@ cd ..
 ```sh
 cd backend
 ```
-
+- in the backend directory
 ```sh
 pip install -r requirements.txt
 ```
 
-then run 
+
+- To build the app
+
+run
+```sh
 docker-compose up
 ```
