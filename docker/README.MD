@@ -86,5 +86,5 @@ pip install -r requirements.txt
 ```
 
 then run 
-dockercompose up
+docker-compose up
 ```
