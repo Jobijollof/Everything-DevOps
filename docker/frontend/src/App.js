@@ -3,7 +3,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>
-          Hello, DevOps Engineers minus Omoruyi
+          Hello, DevOps Engineers minus Omoruyi💪
         </p>
         <a
           className="App-link"
