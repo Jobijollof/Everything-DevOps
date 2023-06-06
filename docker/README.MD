@@ -14,11 +14,14 @@ A Dockerfile is a text file that contains a series of instructions that are used
 
 - Imagine Dockerfile like a recipe that tells Docker how to make the container. It specifies all the ingredients needed, how to prepare them, and how to put them together to make the final container. With a Dockerfile, developers can easily build the same container on any computer, with the same configuration and dependencies.
 
-### Docker Image: A Docker image is a lightweight, standalone, executable package that includes everything needed to run a piece of software, including the code, dependencies, and configuration. Docker images are built from a Dockerfile, which contains a set of instructions that specify how to create the image.
+### Docker Image
+ A Docker image is a lightweight, standalone, executable package that includes everything needed to run a piece of software, including the code, dependencies, and configuration. Docker images are built from a Dockerfile, which contains a set of instructions that specify how to create the image.
 
-### Docker Container: A Docker container is a runtime instance of a Docker image. It's a lightweight, standalone, and executable package that includes the application and all its dependencies. Containers are isolated from each other and from the host system, which makes them a secure and portable way to run software.
+### Docker Container
+A Docker container is a runtime instance of a Docker image. It's a lightweight, standalone, and executable package that includes the application and all its dependencies. Containers are isolated from each other and from the host system, which makes them a secure and portable way to run software.
 
-### Docker Compose: Docker Compose is a tool for defining and running multi-container Docker applications. It allows you to define a set of services (i.e., containers) that make up your application, along with their dependencies, in a YAML file. Docker Compose can then start, stop, and manage the containers as a group, making it easy to run complex applications with multiple components.
+### Docker Compose
+Docker Compose is a tool for defining and running multi-container Docker applications. It allows you to define a set of services (i.e., containers) that make up your application, along with their dependencies, in a YAML file. Docker Compose can then start, stop, and manage the containers as a group, making it easy to run complex applications with multiple components.
 
 
 
@@ -64,7 +67,24 @@ An image is a read-only template with instructions for creating a Docker contain
 A short demo
 
 run:
+cd to frontend directory run 
 
 ```sh
-docker 
+npm install 
+```
+
+```sh
+cd ..
+```
+
+```sh
+cd backend
+```
+
+```sh
+pip install -r requirements.txt
+```
+
+then run 
+dockercompose up
 ```

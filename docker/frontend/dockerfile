@@ -1,0 +1,26 @@
+# Stage 1: Build the application
+FROM node:alpine3.17 as build
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy only the package.json and package-lock.json
+COPY package*.json ./
+
+# Install production dependencies
+RUN npm ci --only=production
+
+# Copy the entire application code, including the public directory
+COPY . .
+
+# Stage 2: Create the production image
+FROM node:alpine3.17
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the built application from the previous stage
+COPY --from=build /app .
+
+# Set the command to run the application
+CMD ["npm", "start"]
